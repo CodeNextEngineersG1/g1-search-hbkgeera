@@ -11,3 +11,24 @@ body {
 }
 
 /* place your styles below */
+.search-tools{
+  display: flex;
+  margin: auto;
+justify-content: center;
+}
+.display{
+  margin: 0 auto;
+  max-width: 500px;
+  text-align: left;
+}
+
+#display img {
+  display: block;
+  margin: 0 auto;
+  width: 250px;
+  height: 250px;
+}
+
+#display h2 {
+  text-align: center;
+}

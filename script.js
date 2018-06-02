@@ -1,43 +1,46 @@
 let database;
-let searchBar = document.getElementId("search-bar");
-let searchButton = document.getElementId("search-button");
-let autoSuggestions = document.getElementId("auto-suggestions") ;
-let display = document.getElementId("display");
+let searchBar = document.getElementById("search-bar");
+let searchButton = document.getElementById("search-button");
+let autoSuggestions = document.getElementById("auto-suggestions") ;
+let display = document.getElementById("display");
 
 /* write your script here */
 database = [{
- team: "Club America",
- league: "liga MX",
+ Team: "Club America",
+ League: "liga MX",
  BestPlayer: "cecilio dominguez",
- championships: 12,
- logo: "img/ame.png"
+ Championships: 12,
+ Logo: "img/ame.png"
 },{
-  team: "Real Madrid",
-  league: "La Liga",
+  Team: "Real Madrid",
+  League: "La Liga",
   BestPlayer: "Cristiano Ronaldo",
-  championships: 33,
-  logo:"img/real.png"
+  Championships: 33,
+  Logo:"img/real.png"
 },{
-  team: "Bayern Munich",
-  league: "bundesliga",
+  Team: "Bayern Munich",
+  League: "bundesliga",
   BestPlayer: "R. Lewandoski",
-  championships: 28,
-  logo: "img/bayern.png"
+  Championships: 28,
+  Logo: "img/bayern.png"
 },{
-  team:"LA Galaxy",
-  league: "MLS",
+  Team:"LA Galaxy",
+  League: "MLS",
   BestPlayer: "Zlatan Ibrahimovich",
-  championships: 5,
-  logo:"img/LA.jpeg"
+  Championships: 5,
+  Logo:"img/LA.jpeg"
 },{
-  team: "manchester United",
-  league: "Premies League",
+  Team: "manchester United",
+  League: "Premier League",
   BestPlayer: "pogba",
-  championships: 5,
-  logo:"img/man.png"
+  Championships: 5,
+  Logo:"img/man.png"
 }];
 
-searchBar.addEventListener("keypress");
+
+searchBar.addEventListener("input",getAutoSuggestions);
+searchBar.addEventListener("keypress",checkKey);
+searchButton.addEventListener('click',processInput);
 function checkKey(e){
   var key = e.whitch || e.keyCode;
   if(key == 13){
@@ -45,8 +48,53 @@ function checkKey(e){
   }
 }
 function processInput(){
+  let cleanedInput = searchBar.value.toLowerCase().trim();
+  autoSuggestions.innerHTML='';
+  autoSuggestions.style.display='none';
+  autoSuggestions.innerHTML='';
+  let databaseRecord = getRecord(cleanedInput);
 
+  if(databaseRecord != null){
+  displayRecord(databaseRecord);
+}else{
+  alert('No Results');
+}
 }
 function getRecord(cleanedInput){
-  
+  for(let i = 0; i < database.length; i++){
+    let cleanedRecordName = database[i].Team.toLowerCase().trim();
+    console.log (cleanedRecordName);
+    if(cleanedInput==cleanedRecordName){
+      return database[i];
+    }
+
+    }
+    return null;
+  }
+ function displayRecord(databaseRecord){
+  var recordTeam = document.createElement("h2");
+  recordTeam.innerHTML =  databaseRecord.Team;
+  var recordLeague = document.createElement("h2");
+  recordLeague.innerHTML =  "<b>League:</b> " +databaseRecord.League;
+  var recordBestPlayer = document.createElement("h2");
+  recordBestPlayer.innerHTML =  "<b>BestPlayer:</b> " +databaseRecord.BestPlayer;
+  var recordChampionships = document.createElement("h2");
+  recordChampionships.innerHTML =  "<b>Championships:</b> " +databaseRecord.Championships;
+  var recordLogo = document.createElement("img");
+  recordLogo.src =  databaseRecord.Logo;
+
+  display.appendChild(recordTeam);
+ display.appendChild(recordLeague);
+ display.appendChild(recordBestPlayer);
+ display.appendChild(recordChampionships);
+ display.appendChild(recordLogo);
+}
+
+
+
+function(getAutoSuggestions){
+
+
+
+
 }
